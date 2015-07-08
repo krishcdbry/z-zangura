@@ -1,0 +1,9 @@
+Session : https://www.youtube.com/watch?v=cfbdojstFOE
+
+
+Annotations
+
+
+$annotationDriver = $config->newDefaultAnnotationDriver(array(__DIR__ . '/Documents'));
+$config->setMetadataDriverImpl($annotationDriver);
+AnnotationDriver::registerAnnotationClasses();
