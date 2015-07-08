@@ -1,9 +1,10 @@
 {
-	"description" : "The CodeIgniter framework",
-	"name" : "codeigniter/framework",
+	"description" : "Zangura",
+	"name" : "Zangura",
 	"license": "MIT",
 	"require": {
-		"php": ">=5.2.4"
+		"php": ">=5.2.4",
+		"doctrine/orm": "2.5.0"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*"
