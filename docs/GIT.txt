@@ -1,0 +1,15 @@
+GIT
+
+
+1. git init (Only in the initial)
+2. git clone http://github.com/krishcdbry/z-zangura.git
+
+3. git remote set-url origin ssh://git@github.com/krishcdbry/z-zangura.git
+
+4. git pull origin master
+
+5. git add --all
+
+6. git commit -m "Message"
+
+7. git push 
