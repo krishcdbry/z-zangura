@@ -1,5 +1,7 @@
 <?php
 use Doctrine\Common\ClassLoader,
+    Doctrine\Common\Annotations\AnnotationReader,
+    Doctrine\Common\Annotations\AnnotationRegistry,
     Doctrine\ORM\Configuration,
     Doctrine\ORM\EntityManager,
     Doctrine\Common\Cache\ArrayCache,

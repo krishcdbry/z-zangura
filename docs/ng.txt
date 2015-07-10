@@ -1,0 +1,14 @@
+A1 - Injection
+
+	1. $sce
+	2. $sanitize
+
+		Ex : var data = "somthing<xss></xss>";
+			  $sanitize(data);
+			  $sce.turstAsHtml(data);
+	3. Interpolate
+	4. angular-translate	
+			sanitize
+			escape
+			sanitize parameters
+			escape parameters	  
