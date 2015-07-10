@@ -13,19 +13,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
 namespace Doctrine\Common\Annotations;
 
 /**
- * Annotations class.
+ * Annotations class
  *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author Jonathan Wage <jonwage@gmail.com>
- * @author Roman Borschel <roman@code-factory.org>
+ * @author  Benjamin Eberlei <kontakt@beberlei.de>
+ * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author  Jonathan Wage <jonwage@gmail.com>
+ * @author  Roman Borschel <roman@code-factory.org>
  */
 class Annotation
 {
@@ -37,9 +37,9 @@ class Annotation
     public $value;
 
     /**
-     * Constructor.
+     * Constructor
      *
-     * @param array $data Key-value for properties to be defined in this class.
+     * @param array $data Key-value for properties to be defined in this class
      */
     public final function __construct(array $data)
     {
@@ -51,9 +51,7 @@ class Annotation
     /**
      * Error handler for unknown property accessor in Annotation class.
      *
-     * @param string $name Unknown property name.
-     *
-     * @throws \BadMethodCallException
+     * @param string $name Unknown property name
      */
     public function __get($name)
     {
@@ -65,10 +63,8 @@ class Annotation
     /**
      * Error handler for unknown property mutator in Annotation class.
      *
-     * @param string $name  Unknown property name.
-     * @param mixed  $value Property value.
-     *
-     * @throws \BadMethodCallException
+     * @param string $name Unkown property name
+     * @param mixed $value Property value
      */
     public function __set($name, $value)
     {

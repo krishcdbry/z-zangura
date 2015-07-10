@@ -13,23 +13,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
 namespace Doctrine\DBAL\Driver\PDOSqlite;
-
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\AbstractSQLiteDriver;
-use Doctrine\DBAL\Driver\PDOConnection;
-use PDOException;
 
 /**
  * The PDO Sqlite driver.
  *
  * @since 2.0
  */
-class Driver extends AbstractSQLiteDriver
+class Driver implements \Doctrine\DBAL\Driver
 {
     /**
      * @var array
@@ -41,7 +36,13 @@ class Driver extends AbstractSQLiteDriver
     );
 
     /**
-     * {@inheritdoc}
+     * Tries to establish a database connection to SQLite.
+     *
+     * @param array $params
+     * @param string $username
+     * @param string $password
+     * @param array $driverOptions
+     * @return Connection
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
@@ -51,18 +52,14 @@ class Driver extends AbstractSQLiteDriver
             unset($driverOptions['userDefinedFunctions']);
         }
 
-        try {
-            $pdo = new PDOConnection(
-                $this->_constructPdoDsn($params),
-                $username,
-                $password,
-                $driverOptions
-            );
-        } catch (PDOException $ex) {
-            throw DBALException::driverException($this, $ex);
-        }
+        $pdo = new \Doctrine\DBAL\Driver\PDOConnection(
+            $this->_constructPdoDsn($params),
+            $username,
+            $password,
+            $driverOptions
+        );
 
-        foreach ($this->_userDefinedFunctions as $fn => $data) {
+        foreach ($this->_userDefinedFunctions AS $fn => $data) {
             $pdo->sqliteCreateFunction($fn, $data['callback'], $data['numArgs']);
         }
 
@@ -72,27 +69,48 @@ class Driver extends AbstractSQLiteDriver
     /**
      * Constructs the Sqlite PDO DSN.
      *
-     * @param array $params
-     *
-     * @return string The DSN.
+     * @return string  The DSN.
+     * @override
      */
     protected function _constructPdoDsn(array $params)
     {
         $dsn = 'sqlite:';
         if (isset($params['path'])) {
             $dsn .= $params['path'];
-        } elseif (isset($params['memory'])) {
+        } else if (isset($params['memory'])) {
             $dsn .= ':memory:';
         }
-
+        
         return $dsn;
     }
 
     /**
-     * {@inheritdoc}
+     * Gets the database platform that is relevant for this driver.
      */
+    public function getDatabasePlatform()
+    {
+        return new \Doctrine\DBAL\Platforms\SqlitePlatform();
+    }
+
+    /**
+     * Gets the schema manager that is relevant for this driver.
+     *
+     * @param Doctrine\DBAL\Connection $conn
+     * @return Doctrine\DBAL\Schema\SqliteSchemaManager
+     */
+    public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
+    {
+        return new \Doctrine\DBAL\Schema\SqliteSchemaManager($conn);
+    }
+
     public function getName()
     {
         return 'pdo_sqlite';
+    }
+
+    public function getDatabase(\Doctrine\DBAL\Connection $conn)
+    {
+        $params = $conn->getParams();
+        return isset($params['path']) ? $params['path'] : null;
     }
 }

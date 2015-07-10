@@ -13,54 +13,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
 namespace Doctrine\DBAL\Driver\PDOMySql;
 
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\AbstractMySQLDriver;
-use Doctrine\DBAL\Driver\PDOConnection;
-use PDOException;
+use Doctrine\DBAL\Connection;
 
 /**
  * PDO MySql driver.
  *
  * @since 2.0
  */
-class Driver extends AbstractMySQLDriver
+class Driver implements \Doctrine\DBAL\Driver
 {
     /**
-     * {@inheritdoc}
+     * Attempts to establish a connection with the underlying driver.
+     *
+     * @param array $params
+     * @param string $username
+     * @param string $password
+     * @param array $driverOptions
+     * @return Doctrine\DBAL\Driver\Connection
      */
     public function connect(array $params, $username = null, $password = null, array $driverOptions = array())
     {
-        try {
-            $conn = new PDOConnection(
-                $this->constructPdoDsn($params),
-                $username,
-                $password,
-                $driverOptions
-            );
-        } catch (PDOException $e) {
-            throw DBALException::driverException($this, $e);
-        }
-
+        $conn = new \Doctrine\DBAL\Driver\PDOConnection(
+            $this->_constructPdoDsn($params),
+            $username,
+            $password,
+            $driverOptions
+        );
         return $conn;
     }
 
     /**
      * Constructs the MySql PDO DSN.
      *
-     * @param array $params
-     *
-     * @return string The DSN.
+     * @return string  The DSN.
      */
-    protected function constructPdoDsn(array $params)
+    private function _constructPdoDsn(array $params)
     {
         $dsn = 'mysql:';
-        if (isset($params['host']) && $params['host'] != '') {
+        if (isset($params['host'])) {
             $dsn .= 'host=' . $params['host'] . ';';
         }
         if (isset($params['port'])) {
@@ -75,15 +71,28 @@ class Driver extends AbstractMySQLDriver
         if (isset($params['charset'])) {
             $dsn .= 'charset=' . $params['charset'] . ';';
         }
-
+        
         return $dsn;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function getDatabasePlatform()
+    {
+        return new \Doctrine\DBAL\Platforms\MySqlPlatform();
+    }
+
+    public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
+    {
+        return new \Doctrine\DBAL\Schema\MySqlSchemaManager($conn);
+    }
+
     public function getName()
     {
         return 'pdo_mysql';
+    }
+
+    public function getDatabase(\Doctrine\DBAL\Connection $conn)
+    {
+        $params = $conn->getParams();
+        return $params['dbname'];
     }
 }

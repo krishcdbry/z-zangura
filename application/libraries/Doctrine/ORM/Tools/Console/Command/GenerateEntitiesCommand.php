@@ -1,5 +1,7 @@
 <?php
 /*
+ *  $Id$
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -13,41 +15,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
 namespace Doctrine\ORM\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Doctrine\ORM\Tools\Console\MetadataFilter;
-use Doctrine\ORM\Tools\EntityGenerator;
-use Doctrine\ORM\Tools\DisconnectedClassMetadataFactory;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument,
+    Symfony\Component\Console\Input\InputOption,
+    Symfony\Component\Console,
+    Doctrine\ORM\Tools\Console\MetadataFilter,
+    Doctrine\ORM\Tools\EntityGenerator,
+    Doctrine\ORM\Tools\DisconnectedClassMetadataFactory;
 
 /**
  * Command to generate entity classes and method stubs from your mapping information.
  *
+ * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
  * @since   2.0
+ * @version $Revision$
  * @author  Benjamin Eberlei <kontakt@beberlei.de>
  * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
  */
-class GenerateEntitiesCommand extends Command
+class GenerateEntitiesCommand extends Console\Command\Command
 {
     /**
-     * {@inheritdoc}
+     * @see Console\Command\Command
      */
     protected function configure()
     {
         $this
         ->setName('orm:generate-entities')
-        ->setAliases(array('orm:generate:entities'))
         ->setDescription('Generate entity classes and method stubs from your mapping information.')
         ->setDefinition(array(
             new InputOption(
@@ -74,29 +75,25 @@ class GenerateEntitiesCommand extends Command
                 'Flag to define if generator should only update entity if it exists.', true
             ),
             new InputOption(
-                'extend', null, InputOption::VALUE_REQUIRED,
+                'extend', null, InputOption::VALUE_OPTIONAL,
                 'Defines a base class to be extended by generated entity classes.'
             ),
             new InputOption(
-                'num-spaces', null, InputOption::VALUE_REQUIRED,
+                'num-spaces', null, InputOption::VALUE_OPTIONAL,
                 'Defines the number of indentation spaces', 4
-            ),
-            new InputOption(
-                'no-backup', null, InputOption::VALUE_NONE,
-                'Flag to define if generator should avoid backuping existing entity file if it exists.'
             )
         ))
         ->setHelp(<<<EOT
 Generate entity classes and method stubs from your mapping information.
 
-If you use the <comment>--update-entities</comment> or <comment>--regenerate-entities</comment> flags your existing
+If you use the <comment>--update-entities</comment> or <comment>--regenerate-entities</comment> flags your exisiting
 code gets overwritten. The EntityGenerator will only append new code to your
 file and will not delete the old code. However this approach may still be prone
 to error and we suggest you use code repositories such as GIT or SVN to make
 backups of your code.
 
 It makes sense to generate the entity code if you are using entities as Data
-Access Objects only and don't put much additional logic on them. If you are
+Access Objects only and dont put much additional logic on them. If you are
 however putting much more logic on the entities you should refrain from using
 the entity-generator and code your entities manually.
 
@@ -110,27 +107,25 @@ EOT
     }
 
     /**
-     * {@inheritdoc}
+     * @see Console\Command\Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $em = $this->getHelper('em')->getEntityManager();
-
+        
         $cmf = new DisconnectedClassMetadataFactory();
         $cmf->setEntityManager($em);
         $metadatas = $cmf->getAllMetadata();
         $metadatas = MetadataFilter::filter($metadatas, $input->getOption('filter'));
-
+        
         // Process destination directory
         $destPath = realpath($input->getArgument('dest-path'));
 
         if ( ! file_exists($destPath)) {
             throw new \InvalidArgumentException(
-                sprintf("Entities destination directory '<info>%s</info>' does not exist.", $input->getArgument('dest-path'))
+                sprintf("Entities destination directory '<info>%s</info>' does not exist.", $destPath)
             );
-        }
-
-        if ( ! is_writable($destPath)) {
+        } else if ( ! is_writable($destPath)) {
             throw new \InvalidArgumentException(
                 sprintf("Entities destination directory '<info>%s</info>' does not have write permissions.", $destPath)
             );
@@ -145,15 +140,14 @@ EOT
             $entityGenerator->setRegenerateEntityIfExists($input->getOption('regenerate-entities'));
             $entityGenerator->setUpdateEntityIfExists($input->getOption('update-entities'));
             $entityGenerator->setNumSpaces($input->getOption('num-spaces'));
-            $entityGenerator->setBackupExisting(!$input->getOption('no-backup'));
 
             if (($extend = $input->getOption('extend')) !== null) {
                 $entityGenerator->setClassToExtend($extend);
             }
 
             foreach ($metadatas as $metadata) {
-                $output->writeln(
-                    sprintf('Processing entity "<info>%s</info>"', $metadata->name)
+                $output->write(
+                    sprintf('Processing entity "<info>%s</info>"', $metadata->name) . PHP_EOL
                 );
             }
 
@@ -161,9 +155,9 @@ EOT
             $entityGenerator->generate($metadatas, $destPath);
 
             // Outputting information message
-            $output->writeln(PHP_EOL . sprintf('Entity classes generated to "<info>%s</INFO>"', $destPath));
+            $output->write(PHP_EOL . sprintf('Entity classes generated to "<info>%s</INFO>"', $destPath) . PHP_EOL);
         } else {
-            $output->writeln('No Metadata Classes to process.');
+            $output->write('No Metadata Classes to process.' . PHP_EOL);
         }
     }
 }

@@ -13,46 +13,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
 namespace Doctrine\ORM\Internal\Hydration;
 
-use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\DBAL\Connection;
 
 /**
  * Hydrator that hydrates a single scalar value from the result set.
  *
- * @since  2.0
  * @author Roman Borschel <roman@code-factory.org>
- * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @since 2.0
  */
 class SingleScalarHydrator extends AbstractHydrator
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function hydrateAllData()
+    /** @override */
+    protected function _hydrateAll()
     {
-        $data    = $this->_stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $numRows = count($data);
+        $cache = array();
+        $result = $this->_stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $num = count($result);
 
-        if ($numRows === 0) {
-            throw new NoResultException();
-        }
-
-        if ($numRows > 1) {
-            throw new NonUniqueResultException('The query returned multiple rows. Change the query or use a different result function like getScalarResult().');
+        if ($num == 0) {
+            throw new \Doctrine\ORM\NoResultException;
+        } else if ($num > 1 || count($result[key($result)]) > 1) {
+            throw new \Doctrine\ORM\NonUniqueResultException;
         }
         
-        if (count($data[key($data)]) > 1) {
-            throw new NonUniqueResultException('The query returned a row containing multiple columns. Change the query or use a different result function like getScalarResult().');
-        }
-
-        $result = $this->gatherScalarRowData($data[key($data)]);
-
+        $result = $this->_gatherScalarRowData($result[key($result)], $cache);
+        
         return array_shift($result);
     }
 }

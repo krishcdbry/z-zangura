@@ -13,74 +13,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
- */
+*/
 
 namespace Doctrine\ORM\Event;
-
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Provides event arguments for the onClear event.
  *
- * @license     http://www.opensource.org/licenses/mit-license.php MIT
- * @link        www.doctrine-project.org
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @link        www.doctrine-project.com
  * @since       2.0
+ * @version     $Revision$
  * @author      Roman Borschel <roman@code-factory.de>
  * @author      Benjamin Eberlei <kontakt@beberlei.de>
  */
 class OnClearEventArgs extends \Doctrine\Common\EventArgs
 {
     /**
-     * @var EntityManagerInterface
+     * @var \Doctrine\ORM\EntityManager
      */
     private $em;
 
     /**
-     * @var string
+     * @param \Doctrine\ORM\EntityManager $em
      */
-    private $entityClass;
-
-    /**
-     * Constructor.
-     *
-     * @param EntityManagerInterface $em
-     * @param string|null            $entityClass Optional entity class.
-     */
-    public function __construct(EntityManagerInterface $em, $entityClass = null)
+    public function __construct($em)
     {
-        $this->em          = $em;
-        $this->entityClass = $entityClass;
+        $this->em = $em;
     }
 
     /**
-     * Retrieves associated EntityManager.
-     *
      * @return \Doctrine\ORM\EntityManager
      */
     public function getEntityManager()
     {
         return $this->em;
-    }
-
-    /**
-     * Name of the entity class that is cleared, or empty if all are cleared.
-     *
-     * @return string|null
-     */
-    public function getEntityClass()
-    {
-        return $this->entityClass;
-    }
-
-    /**
-     * Checks if event clears all entities.
-     *
-     * @return bool
-     */
-    public function clearsAllEntities()
-    {
-        return ($this->entityClass === null);
     }
 }
