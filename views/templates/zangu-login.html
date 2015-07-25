@@ -1,0 +1,31 @@
+<center><h2 class="center center-block">Login</h2></center>
+<hr>
+<div class="social-buttons">
+	<a href="#" class="btn btn-fb col-xs-12"><i class="fa fa-facebook"></i>  Join with Facebook</a>
+</div>
+<br/><br/>
+<center><p class="login-or-line">Or</p></center>
+<form class="form" name="zanguLoginForm" role="form" method="post" ng-submit="zanguLog(zanguLogin)" accept-charset="UTF-8"
+      id="login-nav" ng-init="zanguLogin = {}" novalidate>
+	<div class="form-group">
+		<label class="sr-only" for="zanguSecEmail">Email address</label>
+		<input type="email" class="form-control" id="zanguSecEmail"
+		      ng-model="zanguLogin.email" placeholder="Email address" required>
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="zanguSecPwd">Password</label>
+		<input type="password" class="form-control" id="zanguSecPwd"
+		      ng-model="zanguLogin.password" placeholder="Password" ng-minlength="5" required>
+
+		<div class="help-block text-right"><a href="">Forget the password ?</a>
+		</div>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary btn-block" ng-disabled="zanguLoginForm.$invalid">Sign in</button>
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox"> keep me logged-in
+		</label>
+	</div>
+</form>

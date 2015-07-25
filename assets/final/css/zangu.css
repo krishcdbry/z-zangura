@@ -1,0 +1,181 @@
+.zangu-search .zangu-search-body .zangu-search-input, .zangu-search .zangu-search-body .zangu-search-location {
+  background-color: transparent;
+  border: 0;
+  color: #fff;
+  outline: none;
+  width: 90%;
+  text-indent: 20px;
+  appearance: textfield;
+}
+
+.search-area input::-moz-placeholder, .search-area input:-moz-placeholder {
+  color: #000;
+  height: 30px;
+  line-height: 30px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  font-weight: 300;
+}
+
+body {
+  font-family: Trebuchet MS, Arial, Verdana, Sans-serif;
+}
+
+.navbar {
+  border-radius: 0;
+  padding: 7px;
+}
+.navbar.zangu-header {
+  border-radius: 0;
+}
+.navbar .navbar-brand {
+  color: #fff;
+  font-size: 27px;
+}
+
+.navbar-inverse {
+  border-radius: 0;
+  padding: 7px;
+}
+.navbar-inverse.zangu-header {
+  border-radius: 0;
+}
+.navbar-inverse .navbar-brand {
+  color: #fff;
+  font-size: 27px;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #fff;
+}
+
+@media (max-width: 3000px) {
+  .navbar {
+    border-radius: 0;
+  }
+
+  .navbar-inverse {
+    border-radius: 0;
+  }
+}
+#zangu-notification {
+  padding: 14px;
+}
+
+#zangu-login {
+  min-width: 250px;
+  padding: 14px 14px 0;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+#zangu-login .help-block {
+  font-size: 12px;
+}
+#zangu-login .bottom {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-top: 1px solid #ddd;
+  clear: both;
+  padding: 14px;
+}
+#zangu-login .social-buttons {
+  margin: 12px 0;
+}
+#zangu-login .social-buttons a {
+  width: 49%;
+}
+#zangu-login .form-group {
+  margin-bottom: 10px;
+}
+
+.btn-fb {
+  color: #fff;
+  background-color: #3b5998;
+}
+.btn-fb:hover {
+  color: #fff;
+  background-color: #496ebc;
+}
+
+.btn-tw {
+  color: #fff;
+  background-color: #55acee;
+}
+.btn-tw:hover {
+  color: #fff;
+  background-color: #55acee;
+}
+
+@media (max-width: 768px) {
+  #zangu-login {
+    background-color: inherit;
+    color: #fff;
+  }
+  #zangu-login .bottom {
+    background-color: inherit;
+    border-top: 0 none;
+  }
+
+  .zangu-search {
+    font-size: 21px;
+    line-height: 45px;
+  }
+  .zangu-search .zangu-search-body .search-items-location {
+    border-left: 0 solid #f0f0f0;
+  }
+}
+.zangu-search {
+  font-size: 28px;
+}
+.zangu-search .zangu-search-body {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  box-shadow: 0 -1px 111px #999;
+  border-radius: 27px;
+}
+.zangu-search .zangu-search-body .search-items-location {
+  border-left: 1px solid #f0f0f0;
+}
+.zangu-search .zangu-search-body .zangu-search-location {
+  width: 85%;
+}
+.zangu-search .zangu-search-body .zangu-search-btn {
+  background-color: #227297;
+}
+.zangu-search > .zangu-res-body .search-results {
+  background-color: #fff;
+  width: 100%;
+  height: 400px;
+  box-shadow: 0px 0px 56px #999;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.search-area input::-webkit-input-placeholder {
+  color: #000;
+  height: 30px;
+  line-height: 30px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  font-weight: 300;
+}
+
+.zangura-search-div {
+  background-image: url(../../../static/pics/zangoora-bg-4.jpg);
+  background-size: cover;
+  width: 100%;
+  min-height: 550px;
+  height: 74vh;
+  padding-top: 15%;
+}
+.zangura-search-div .wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  min-height: 550px;
+  height: 74vh;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/*# sourceMappingURL=zangu.css.map */

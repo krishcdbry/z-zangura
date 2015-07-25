@@ -1,0 +1,15 @@
+/* 
+Zangu  Registration
+*/
+
+ {
+ 	"zanguSecRegistrationRes" : {
+ 		"is_error" : 0,  			// 0 or 1 
+ 		"message"  : {
+ 			"template" : "text",
+ 			"value"    : "Successfully registered"		
+ 		}	
+ 	}
+ }
+
+ 

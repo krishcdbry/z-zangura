@@ -1,0 +1,33 @@
+<center><h2 class="center center-block">Register</h2></center>
+<hr>
+<div class="social-buttons">
+	<a href="#" class="btn btn-fb col-xs-12"><i class="fa fa-facebook"></i>  Join with Facebook</a>
+</div>
+<br/><br/>
+<center><p class="login-or-line">Or</p></center>
+<form class="form" role="form" method="post" ng-submit="zanguReg(zanguRegister)" accept-charset="UTF-8"
+      id="login-nav" name="zanguRegistrationForm" ng-init="zanguRegister = {}" autocomplete="off" novalidate>
+	<div class="form-group">
+		<label class="sr-only" for="zanguSecEmail">Email address</label>
+		<input type="email" class="form-control" ng-model="zanguRegister.email" autocomplete="off" id="zanguSecEmail"
+		       placeholder="Email address" required>
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="zanguSecPwd">Password</label>
+		<input type="password" class="form-control" ng-model="zanguRegister.password" id="zanguSecPwd"
+		       placeholder="Password (Min 5 characters)" ng-minlength="5" autocomplete="off" required>
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="zanguSecUsername">Username</label>
+		<input type="text" class="form-control" ng-model="zanguRegister.username" id="zanguSecUsername"
+		       placeholder="Username [Min 3 characters]" ng-minlength="3" required>
+	</div>
+	<div class="form-group">
+		<button type="submit" ng-disabled="zanguRegistrationForm.$invalid" class="btn btn-primary btn-block">Sign up</button>
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox"> I am accepting terms & conditions
+		</label>
+	</div>
+</form>

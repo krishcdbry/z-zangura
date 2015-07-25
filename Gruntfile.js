@@ -8,15 +8,15 @@ module.exports = function(grunt) {
 					separator: ';'
 				}
 				, src: [
-					'static/scripts/*.js'
+					'assets/scripts/*.js'
 				]
-				, dest: 'static/final/scripts/zangu.js'
+				, dest: 'assets/final/scripts/zangu.js'
 			}
 			, sass: {
 				src: [
-					'static/css/*.scss'
+					'assets/css/*.scss'
 				]
-				, dest: 'static/final/css/zangu.scss'
+				, dest: 'assets/final/css/zangu.scss'
 			}
 		}
 		, uglify: {
@@ -25,7 +25,17 @@ module.exports = function(grunt) {
 			}
 			, js: {
 				files: {
-					'static/final/scripts/zangu.min.js': ['static/final/scripts/zangu.js']
+					'assets/final/scripts/zangu.min.js': ['assets/final/scripts/zangu.js']
+				}
+			}
+		}
+		, sass: {
+			options: {
+				style: 'expanded'
+			}
+			, style: {
+				files: {
+					'assets/final/css/zangu.css': 'assets/final/css/zangu.scss'
 				}
 			}
 		}
@@ -35,24 +45,18 @@ module.exports = function(grunt) {
 			}
 			, style: {
 				files: {
-					'static/final/css/zangu.min.css': 'static/final/css/zangu.scss'
+					'assets/final/css/zangu.min.css': 'assets/final/css/zangu.scss'
 				}
 			}
 		}
 		, watch: {
 			js: {
-				files: ['static/scripts/*.js']
+				files: ['assets/scripts/*.js']
 				, tasks: ['concat:js', 'uglify:js']
-				, options: {
-					livereload: true
-				}
 			}
 			, css: {
-				files: ['static/css/*.scss']
+				files: ['assets/css/*.scss']
 				, tasks: ['concat:sass', 'sass:style']
-				, options: {
-					livereload: true
-				}
 			}
 		}
 	});
@@ -61,4 +65,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 };
