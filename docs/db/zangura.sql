@@ -94,10 +94,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `zangura_main_db`.`z_location`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `zangura_main_db`.`z_location` ;
+DROP TABLE IF EXISTS `zangura_main_db`.`z_locations` ;
 
-CREATE TABLE IF NOT EXISTS `zangura_main_db`.`z_location` (
-  `id` BIGINT NOT NULL,
+CREATE TABLE IF NOT EXISTS `zangura_main_db`.`z_locations` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(1000) NOT NULL,
   `latitude` VARCHAR(255) NULL,
   `longitude` VARCHAR(255) NULL,
@@ -235,20 +235,20 @@ CREATE TABLE IF NOT EXISTS `zangura_main_db`.`z_shops` (
   `landmark` BIGINT NULL,
   `shop_status` ENUM('open','opening soon', 'temporary closed', 'closed') NOT NULL DEFAULT 'open',
   `website` VARCHAR(255) NULL,
-  `shop_creater_id` BIGINT NOT NULL,
+  `shop_creator_id` BIGINT NOT NULL,
   `is_verified` ENUM('0','1') NOT NULL DEFAULT '0',
   `created_at` DATETIME NOT NULL,
   `last_updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_z_shops_2_idx` (`location_id` ASC),
-  INDEX `fk_z_shops_1_idx` (`shop_creater_id` ASC),
+  INDEX `fk_z_shops_1_idx` (`shop_creator_id` ASC),
   CONSTRAINT `fk_z_shops_2`
     FOREIGN KEY (`location_id`)
     REFERENCES `zangura_main_db`.`z_location` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_z_shops_1`
-    FOREIGN KEY (`shop_creater_id`)
+    FOREIGN KEY (`shop_creator_id`)
     REFERENCES `zangura_main_db`.`z_sales_users` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
