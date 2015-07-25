@@ -13,7 +13,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
 
@@ -22,22 +22,22 @@ namespace Doctrine\Common\Persistence;
 /**
  * Contract for a Doctrine persistence layer ObjectManager class to implement.
  *
- * @link   www.doctrine-project.org
- * @since  2.1
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author Jonathan Wage <jonwage@gmail.com>
+ * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @link    www.doctrine-project.org
+ * @since   2.1
+ * @author  Benjamin Eberlei <kontakt@beberlei.de>
+ * @author  Jonathan Wage <jonwage@gmail.com>
  */
 interface ObjectManager
 {
     /**
-     * Finds an object by its identifier.
+     * Finds a object by its identifier.
      *
      * This is just a convenient shortcut for getRepository($className)->find($id).
      *
-     * @param string $className The class name of the object to find.
-     * @param mixed  $id        The identity of the object to find.
-     *
-     * @return object The found object.
+     * @param string
+     * @param mixed
+     * @return object
      */
     public function find($className, $id);
 
@@ -45,13 +45,11 @@ interface ObjectManager
      * Tells the ObjectManager to make an instance managed and persistent.
      *
      * The object will be entered into the database as a result of the flush operation.
-     *
+     * 
      * NOTE: The persist operation always considers objects that are not yet known to
      * this ObjectManager as NEW. Do not pass detached objects to the persist operation.
      *
      * @param object $object The instance to make managed and persistent.
-     *
-     * @return void
      */
     public function persist($object);
 
@@ -61,8 +59,6 @@ interface ObjectManager
      * A removed object will be removed from the database as a result of the flush operation.
      *
      * @param object $object The object instance to remove.
-     *
-     * @return void
      */
     public function remove($object);
 
@@ -72,20 +68,8 @@ interface ObjectManager
      * The object passed to merge will not become associated/managed with this ObjectManager.
      *
      * @param object $object
-     *
-     * @return object
      */
     public function merge($object);
-
-    /**
-     * Clears the ObjectManager. All objects that are currently managed
-     * by this ObjectManager become detached.
-     *
-     * @param string|null $objectName if given, only objects of this type will get detached.
-     *
-     * @return void
-     */
-    public function clear($objectName = null);
 
     /**
      * Detaches an object from the ObjectManager, causing a managed object to
@@ -95,8 +79,6 @@ interface ObjectManager
      * reference it.
      *
      * @param object $object The object to detach.
-     *
-     * @return void
      */
     public function detach($object);
 
@@ -105,8 +87,6 @@ interface ObjectManager
      * overriding any local changes that have not yet been persisted.
      *
      * @param object $object The object to refresh.
-     *
-     * @return void
      */
     public function refresh($object);
 
@@ -114,8 +94,6 @@ interface ObjectManager
      * Flushes all changes to objects that have been queued up to now to the database.
      * This effectively synchronizes the in-memory state of managed objects with the
      * database.
-     *
-     * @return void
      */
     public function flush();
 
@@ -123,7 +101,6 @@ interface ObjectManager
      * Gets the repository for a class.
      *
      * @param string $className
-     *
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
     public function getRepository($className);
@@ -135,7 +112,6 @@ interface ObjectManager
      * (as it is returned by get_class($obj)).
      *
      * @param string $className
-     *
      * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata
      */
     public function getClassMetadata($className);
@@ -143,27 +119,7 @@ interface ObjectManager
     /**
      * Gets the metadata factory used to gather the metadata of classes.
      *
-     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadataFactory
+     * @return Doctrine\Common\Persistence\Mapping\ClassMetadataFactory
      */
     public function getMetadataFactory();
-
-    /**
-     * Helper method to initialize a lazy loading proxy or persistent collection.
-     *
-     * This method is a no-op for other objects.
-     *
-     * @param object $obj
-     *
-     * @return void
-     */
-    public function initializeObject($obj);
-
-    /**
-     * Checks if the object is part of the current UnitOfWork and therefore managed.
-     *
-     * @param object $object
-     *
-     * @return bool
-     */
-    public function contains($object);
 }

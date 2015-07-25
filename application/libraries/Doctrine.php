@@ -1,7 +1,6 @@
 <?php
+
 use Doctrine\Common\ClassLoader,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\Common\Annotations\AnnotationRegistry,
     Doctrine\ORM\Configuration,
     Doctrine\ORM\EntityManager,
     Doctrine\Common\Cache\ArrayCache,
@@ -9,72 +8,83 @@ use Doctrine\Common\ClassLoader,
 
 class Doctrine {
 
-  public $em = null;
+    public $em = null;
 
-  public function __construct()
-  {
-    // load database configuration from CodeIgniter
-    require_once APPPATH.'config/database.php';
+    public function __construct() {
+        // load database configuration from CodeIgniter
+        require_once APPPATH . 'config/database.php';
 
-    // Set up class loading. You could use different autoloaders, provided by your favorite framework,
-    // if you want to.
-    require_once APPPATH.'libraries/Doctrine/Common/ClassLoader.php';
+        // Set up class loading. You could use different autoloaders, provided by your favorite framework,
+        // if you want to.
+        require_once APPPATH . 'libraries/Doctrine/Common/ClassLoader.php';
 
-    // loading libraries
-    $doctrineClassLoader = new ClassLoader('Doctrine',  APPPATH.'libraries');
-    $doctrineClassLoader->register();
+        $doctrineClassLoader = new ClassLoader('Doctrine', APPPATH . 'libraries');
+        $doctrineClassLoader->register();
+        $entitiesClassLoader = new ClassLoader('models', rtrim(APPPATH, "/"));
+        $entitiesClassLoader->register();
+        $proxiesClassLoader = new ClassLoader('Proxies', APPPATH . 'models/proxies');
+        $proxiesClassLoader->register();
 
-	// loading Models	
-    $entitiesClassLoader = new ClassLoader('Zangura\\Models', rtrim(APPPATH, "/" ));
-    $entitiesClassLoader->register();
+        // Set up caches
+        $config = new Configuration;
+        $cache = new ArrayCache;
+        $config->setMetadataCacheImpl($cache);
+        $driverImpl = $config->newDefaultAnnotationDriver(array(APPPATH . 'models/Entities'));
+        $config->setMetadataDriverImpl($driverImpl);
+        $config->setQueryCacheImpl($cache);
 
-    // loading Proxies
-    $entitiesClassLoader = new ClassLoader('Zangura\\Proxies', rtrim(APPPATH, "/" ));
-    $entitiesClassLoader->register();
+        $config->setQueryCacheImpl($cache);
 
-    // loading Helpers
-    $entitiesClassLoader = new ClassLoader('Zangura\\Helpers', rtrim(APPPATH, "/" ));
-    $entitiesClassLoader->register();
+        // Proxy configuration
+        $config->setProxyDir(APPPATH . '/models/proxies');
+        $config->setProxyNamespace('Proxies');
 
-    // loading Repositories
-    $entitiesClassLoader = new ClassLoader('Zangura\\Repositories', rtrim(APPPATH, "/" ));
-    $entitiesClassLoader->register();
+        // Set up logger
+        $logger = new EchoSQLLogger;
+        $config->setSQLLogger($logger);
 
-    // loading Security 
-    $entitiesClassLoader = new ClassLoader('Zangura\\Security', rtrim(APPPATH, "/" ));
-    $entitiesClassLoader->register();
+        $config->setAutoGenerateProxyClasses(TRUE);
 
+        // Database connection information
+        $connectionOptions = array(
+            'driver' => 'pdo_mysql',
+            'user' => $db['default']['username'],
+            'password' => $db['default']['password'],
+            'host' => $db['default']['hostname'],
+            'dbname' => $db['default']['database']
+        );
 
-    // Set up caches
-    $config = new Configuration;
-    $cache = new ArrayCache;
-    $config->setMetadataCacheImpl($cache);
-    $driverImpl = $config->newDefaultAnnotationDriver(array(APPPATH.'models/Entities'));
-    $config->setMetadataDriverImpl($driverImpl);
-    $config->setQueryCacheImpl($cache);
+        // Create EntityManager
+        $this->em = EntityManager::create($connectionOptions, $config);
 
-    $config->setQueryCacheImpl($cache);
+       // $this->generate_classes();
+    }
 
-    // Proxy configuration
-    $config->setProxyDir(APPPATH.'/models/proxies');
-    $config->setProxyNamespace('Proxies');
+    /**
+     * generate entity objects automatically from mysql db tables
+     * @return none
+     */
+    function generate_classes() {
 
-    // Set up logger
-    $logger = new EchoSQLLogger;
-    $config->setSQLLogger($logger);
+        $this->em->getConfiguration()
+                ->setMetadataDriverImpl(
+                        new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
+                        $this->em->getConnection()->getSchemaManager()
+                        )
+        );
 
-    $config->setAutoGenerateProxyClasses( TRUE );
+        $platform = $this->em->getConnection()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', 'string');
+        
+        $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory();
+        $cmf->setEntityManager($this->em);
+        $metadata = $cmf->getAllMetadata();
+        $generator = new \Doctrine\ORM\Tools\EntityGenerator();
 
-    // Database connection information
-    $connectionOptions = array(
-        'driver' => 'pdo_mysql',
-        'user' =>     $db['default']['username'],
-        'password' => $db['default']['password'],
-        'host' =>     $db['default']['hostname'],
-        'dbname' =>   $db['default']['database']
-    );
+        $generator->setUpdateEntityIfExists(true);
+        $generator->setGenerateStubMethods(true);
+        $generator->setGenerateAnnotations(true);
+        $generator->generate($metadata, APPPATH . "models/Entities");
+    }
 
-    // Create EntityManager
-    $this->em = EntityManager::create($connectionOptions, $config);
-  }
 }

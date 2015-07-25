@@ -1,5 +1,7 @@
 <?php
 /*
+ *  $Id$
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -13,94 +15,75 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
- */
+*/
 
 namespace Doctrine\ORM\Tools\Console\Command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Doctrine\ORM\Tools\SchemaValidator;
+use Symfony\Component\Console\Input\InputArgument,
+    Symfony\Component\Console\Input\InputOption,
+    Symfony\Component\Console;
 
 /**
- * Command to validate that the current mapping is valid.
+ * Validate that the current mapping is valid
  *
- * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.doctrine-project.com
  * @since       1.0
+ * @version     $Revision$
  * @author      Benjamin Eberlei <kontakt@beberlei.de>
  * @author      Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author      Jonathan Wage <jonwage@gmail.com>
  * @author      Roman Borschel <roman@code-factory.org>
  */
-class ValidateSchemaCommand extends Command
+class ValidateSchemaCommand extends Console\Command\Command
 {
     /**
-     * {@inheritdoc}
+     * @see Console\Command\Command
      */
     protected function configure()
     {
         $this
         ->setName('orm:validate-schema')
-        ->setDescription('Validate the mapping files.')
-        ->addOption(
-            'skip-mapping',
-            null,
-            InputOption::VALUE_NONE,
-            'Skip the mapping validation check'
-        )
-        ->addOption(
-            'skip-sync',
-            null,
-            InputOption::VALUE_NONE,
-            'Skip checking if the mapping is in sync with the database'
-        )
-        ->setHelp(
-            <<<EOT
+        ->setDescription('Validate that the mapping files.')
+        ->setHelp(<<<EOT
 'Validate that the mapping files are correct and in sync with the database.'
 EOT
         );
     }
 
     /**
-     * {@inheritdoc}
+     * @see Console\Command\Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $em = $this->getHelper('em')->getEntityManager();
-        $validator = new SchemaValidator($em);
+
+        $validator = new \Doctrine\ORM\Tools\SchemaValidator($em);
+        $errors = $validator->validateMapping();
+
         $exit = 0;
-
-        if ($input->getOption('skip-mapping')) {
-            $output->writeln('<comment>[Mapping]  Skipped mapping check.</comment>');
-        } elseif ($errors = $validator->validateMapping()) {
-            foreach ($errors as $className => $errorMessages) {
-                $output->writeln("<error>[Mapping]  FAIL - The entity-class '" . $className . "' mapping is invalid:</error>");
-
-                foreach ($errorMessages as $errorMessage) {
-                    $output->writeln('* ' . $errorMessage);
+        if ($errors) {
+            foreach ($errors AS $className => $errorMessages) {
+                $output->write("<error>[Mapping]  FAIL - The entity-class '" . $className . "' mapping is invalid:</error>\n");
+                foreach ($errorMessages AS $errorMessage) {
+                    $output->write('* ' . $errorMessage . "\n");
                 }
-
-                $output->writeln('');
+                $output->write("\n");
             }
-
             $exit += 1;
         } else {
-            $output->writeln('<info>[Mapping]  OK - The mapping files are correct.</info>');
+            $output->write('<info>[Mapping]  OK - The mapping files are correct.</info>' . "\n");
         }
 
-        if ($input->getOption('skip-sync')) {
-            $output->writeln('<comment>[Database] SKIPPED - The database was not checked for synchronicity.</comment>');
-        } elseif (!$validator->schemaInSyncWithMetadata()) {
-            $output->writeln('<error>[Database] FAIL - The database schema is not in sync with the current mapping file.</error>');
+        if (!$validator->schemaInSyncWithMetadata()) {
+            $output->write('<error>[Database] FAIL - The database schema is not in sync with the current mapping file.</error>' . "\n");
             $exit += 2;
         } else {
-            $output->writeln('<info>[Database] OK - The database schema is in sync with the mapping files.</info>');
+            $output->write('<info>[Database] OK - The database schema is in sync with the mapping files.</info>' . "\n");
         }
 
-        return $exit;
+        exit($exit);
     }
 }

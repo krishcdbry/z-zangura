@@ -13,33 +13,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * This software consists of voluntary contributions made by many individuals
- * and is licensed under the MIT license. For more information, see
+ * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
+
 
 namespace Doctrine\DBAL\Platforms\Keywords;
 
 /**
- * MySQL Keywordlist.
+ * MySQL Keywordlist
  *
- * @link   www.doctrine-project.org
- * @since  2.0
- * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @author David Coallier <davidc@php.net>
+ * @license  BSD http://www.opensource.org/licenses/bsd-license.php
+ * @link        www.doctrine-project.com
+ * @since       2.0
+ * @author      Benjamin Eberlei <kontakt@beberlei.de>
+ * @author      David Coallier <davidc@php.net>
  */
 class MySQLKeywords extends KeywordList
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'MySQL';
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     protected function getKeywords()
     {
         return array(
@@ -194,7 +190,6 @@ class MySQLKeywords extends KeywordList
             'PROCEDURE',
             'PURGE',
             'RAID0',
-            'RANGE',
             'READ',
             'READS',
             'REAL',
