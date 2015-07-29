@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - zangura_main_db@localhost" uuid="90b6aaa3-701a-4e47-a093-d2951a122c32">
+    <database-info product="MySQL" version="5.5.44-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="zangura_main_db"/>
+    <table name="z_account_mail_status" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="account_status" sqlType="ENUM" precision="7" scale="0" nullable="false" jdbcType="1" def="J2FjdGl2ZSc="/>
+      <column name="is_verified" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="is_verification_mail_sent" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="is_three_day_verification_mail_sent" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="is_seven_day_verification_mail_sent" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_acc_ms_1" columns="user_id" ref-table="z_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_acc_ms_1_idx" unique="false" columns="user_id"/>
+    </table>
+    <table name="z_categories" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_z_shop_categories_1" table="z_shop_categories" schema="" catalog="zangura_main_db" columns="category_id"/>
+      <exported-key name="fk_z_shop_items_3" table="z_shop_items" schema="" catalog="zangura_main_db" columns="category_id"/>
+    </table>
+    <table name="z_cities" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_z_user_details_2" table="z_user_details" schema="" catalog="zangura_main_db" columns="city_id"/>
+    </table>
+    <table name="z_item_colors" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="item_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="code" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_item_colors_1" columns="item_id" ref-table="z_shop_items" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_item_colors_1_idx" unique="false" columns="item_id"/>
+    </table>
+    <table name="z_item_size" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="item_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="size" sqlType="ENUM" precision="4" scale="0" nullable="false" jdbcType="1"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_item_size_1" columns="item_id" ref-table="z_shop_items" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_item_colors_1_idx" unique="false" columns="item_id"/>
+    </table>
+    <table name="z_locations" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="latitude" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="longitude" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_z_shops_2" table="z_shops" schema="" catalog="zangura_main_db" columns="location_id"/>
+      <exported-key name="fk_z_user_details_3" table="z_user_details" schema="" catalog="zangura_main_db" columns="location_id"/>
+      <index name="last_updated_at_UNIQUE" unique="true" columns="last_updated_at"/>
+    </table>
+    <table name="z_logs" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="login_count" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="last_login_ip" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_logs_1" columns="user_id" ref-table="z_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_logs_1_idx" unique="false" columns="user_id"/>
+    </table>
+    <table name="z_notifications" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="z_sales_managers" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="manager_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="employee_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_sales_managers_1" columns="manager_id" ref-table="z_sales_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_sales_managers_2" columns="employee_id" ref-table="z_sales_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_sales_managers_1_idx" unique="false" columns="manager_id"/>
+      <index name="fk_sales_managers_2_idx" unique="false" columns="employee_id"/>
+    </table>
+    <table name="z_sales_users" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="login_id" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="ENUM" precision="9" scale="0" nullable="false" jdbcType="1" def="J2VtcGxveWVlJw=="/>
+      <column name="status" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzEn"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_sales_managers_1" table="z_sales_managers" schema="" catalog="zangura_main_db" columns="manager_id"/>
+      <exported-key name="fk_sales_managers_2" table="z_sales_managers" schema="" catalog="zangura_main_db" columns="employee_id"/>
+      <exported-key name="fk_z_shops_1" table="z_shops" schema="" catalog="zangura_main_db" columns="shop_creator_id"/>
+    </table>
+    <table name="z_saved_items" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="item_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_saved_items_1" columns="zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_saved_items_2" columns="item_id" ref-table="z_shop_items" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_saved_shops_1_idx" unique="false" columns="zangu_id"/>
+      <index name="fk_z_saved_shops_20_idx" unique="false" columns="item_id"/>
+    </table>
+    <table name="z_saved_shops" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_saved_shops_1" columns="zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_saved_shops_2" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_saved_shops_1_idx" unique="false" columns="zangu_id"/>
+      <index name="fk_z_saved_shops_2_idx" unique="false" columns="shop_id"/>
+    </table>
+    <table name="z_secure" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_verified" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="unique_key" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="verification_mail_security_code" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="is_forgot_password" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="is_account_blocked" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="invalid_login_attempts" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="invalid_login_attempts_ip" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="account_unblock_security_code" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_secure_1" columns="user_id" ref-table="z_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_z_secure_1_idx" unique="false" columns="user_id"/>
+    </table>
+    <table name="z_shop_categories" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="category_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_categories_1" columns="category_id" ref-table="z_categories" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shop_categories_2" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_shop_categories_1_idx" unique="false" columns="category_id"/>
+      <index name="fk_z_shop_categories_2_idx" unique="false" columns="shop_id"/>
+    </table>
+    <table name="z_shop_followers" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_followers_1" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shop_followers_2" columns="zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_shop_followers_1_idx" unique="false" columns="shop_id"/>
+      <index name="fk_z_shop_followers_2_idx" unique="false" columns="zangu_id"/>
+    </table>
+    <table name="z_shop_item_photos" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_item_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="path" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_item_photos_1" columns="shop_item_id" ref-table="z_shop_items" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_shop_item_photos_1_idx" unique="false" columns="shop_item_id"/>
+    </table>
+    <table name="z_shop_items" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="vendor_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_active" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="category_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="description" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="price" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="discount" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_items_1" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shop_items_2" columns="vendor_id" ref-table="z_vendor" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shop_items_3" columns="category_id" ref-table="z_categories" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_z_item_colors_1" table="z_item_colors" schema="" catalog="zangura_main_db" columns="item_id"/>
+      <exported-key name="fk_z_item_size_1" table="z_item_size" schema="" catalog="zangura_main_db" columns="item_id"/>
+      <exported-key name="fk_z_saved_items_2" table="z_saved_items" schema="" catalog="zangura_main_db" columns="item_id"/>
+      <exported-key name="fk_z_shop_item_photos_1" table="z_shop_item_photos" schema="" catalog="zangura_main_db" columns="shop_item_id"/>
+      <index name="fk_z_shop_items_1_idx" unique="false" columns="shop_id"/>
+      <index name="fk_z_shop_items_2_idx" unique="false" columns="vendor_id"/>
+      <index name="fk_z_shop_items_3_idx" unique="false" columns="category_id"/>
+    </table>
+    <table name="z_shop_photos" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="path" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_photos_1" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_z_shop_photos_1_idx" unique="false" columns="shop_id"/>
+    </table>
+    <table name="z_shop_reviews" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="review" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_reviews_10" columns="zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shop_reviews_20" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_z_shop_reviews_likes_1" table="z_shop_reviews_likes" schema="" catalog="zangura_main_db" columns="review_id"/>
+      <index name="fk_z_shop_categories_10_idx" unique="false" columns="zangu_id"/>
+      <index name="fk_z_shop_categories_2_idx" unique="false" columns="shop_id"/>
+    </table>
+    <table name="z_shop_reviews_likes" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="review_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_reviews_likes_1" columns="review_id" ref-table="z_shop_reviews" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shop_reviews_likes_2" columns="zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_shop_categories_21_idx" unique="false" columns="zangu_id"/>
+      <index name="fk_z_shop_reviews_likes_1" unique="false" columns="review_id"/>
+    </table>
+    <table name="z_shop_users_viewed" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shop_users_viewed_1" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shop_users_viewed_2" columns="zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_shop_users_viewed_1_idx" unique="false" columns="shop_id"/>
+      <index name="fk_z_shop_users_viewed_2_idx" unique="false" columns="zangu_id"/>
+    </table>
+    <table name="z_shops" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="is_active" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="banner" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12" def="J2RlZmF1bHRfc2hvcF9pbWFnZS5qcGcn"/>
+      <column name="type" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="J2En"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="discount" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offer" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="rating" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="views" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" def="MA=="/>
+      <column name="contact_number" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="address" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="pincode" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="location_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="landmark" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="shop_status" sqlType="ENUM" precision="16" scale="0" nullable="false" jdbcType="1" def="J29wZW4n"/>
+      <column name="website" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="twitter_url" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="facebook_url" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="other_Details" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="shop_creator_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_verified" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shops_1" columns="shop_creator_id" ref-table="z_sales_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shops_2" columns="location_id" ref-table="z_locations" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_z_saved_shops_2" table="z_saved_shops" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_shop_categories_2" table="z_shop_categories" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_shop_followers_1" table="z_shop_followers" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_shop_items_1" table="z_shop_items" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_shop_photos_1" table="z_shop_photos" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_shop_reviews_20" table="z_shop_reviews" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_shop_users_viewed_1" table="z_shop_users_viewed" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_shops_recommends_1" table="z_shops_recommends" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <exported-key name="fk_z_vendors_shops_1" table="z_vendors_shops" schema="" catalog="zangura_main_db" columns="shop_id"/>
+      <index name="fk_z_shops_1_idx" unique="false" columns="shop_creator_id"/>
+      <index name="fk_z_shops_2_idx" unique="false" columns="location_id"/>
+    </table>
+    <table name="z_shops_recommends" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="recommender_zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="recommend_to_zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_shops_recommends_1" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shops_recommends_2" columns="recommender_zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_shops_recommends_3" columns="recommend_to_zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_shops_recommends_1_idx" unique="false" columns="shop_id"/>
+      <index name="fk_z_shops_recommends_2_idx" unique="false" columns="recommender_zangu_id"/>
+      <index name="fk_z_shops_recommends_3_idx" unique="false" columns="recommend_to_zangu_id"/>
+    </table>
+    <table name="z_user_details" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="first_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="mobile_number" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="location_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="profile_pic" sqlType="VARCHAR" precision="1000" scale="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_user_details_1" columns="user_id" ref-table="z_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_user_details_2" columns="city_id" ref-table="z_cities" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_user_details_3" columns="location_id" ref-table="z_locations" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_user_details_1_idx" unique="false" columns="user_id"/>
+      <index name="fk_z_user_details_2_idx" unique="false" columns="city_id"/>
+      <index name="fk_z_user_details_3_idx" unique="false" columns="location_id"/>
+    </table>
+    <table name="z_users" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="username" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="ENUM" precision="6" scale="0" nullable="true" jdbcType="1"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_z_acc_ms_1" table="z_account_mail_status" schema="" catalog="zangura_main_db" columns="user_id"/>
+      <exported-key name="fk_z_logs_1" table="z_logs" schema="" catalog="zangura_main_db" columns="user_id"/>
+      <exported-key name="fk_z_secure_1" table="z_secure" schema="" catalog="zangura_main_db" columns="user_id"/>
+      <exported-key name="fk_z_user_details_1" table="z_user_details" schema="" catalog="zangura_main_db" columns="user_id"/>
+      <exported-key name="fk_z_vendor_1" table="z_vendor" schema="" catalog="zangura_main_db" columns="user_id"/>
+      <exported-key name="fk_z_zangus_1" table="z_zangus" schema="" catalog="zangura_main_db" columns="user_id"/>
+      <index name="email_UNIQUE" unique="true" columns="email"/>
+    </table>
+    <table name="z_vendor" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="is_verified_vendor" sqlType="ENUM" precision="2" scale="0" nullable="false" jdbcType="1" def="JzAn"/>
+      <column name="website" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="business_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_vendor_1" columns="user_id" ref-table="z_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_z_shop_items_2" table="z_shop_items" schema="" catalog="zangura_main_db" columns="vendor_id"/>
+      <exported-key name="fk_z_vendors_shops_2" table="z_vendors_shops" schema="" catalog="zangura_main_db" columns="vendor_id"/>
+      <index name="fk_z_vendor_1_idx" unique="false" columns="user_id"/>
+    </table>
+    <table name="z_vendors_shops" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="vendor_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="shop_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_vendors_shops_1" columns="shop_id" ref-table="z_shops" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_vendors_shops_2" columns="vendor_id" ref-table="z_vendor" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_vendors_shops_1_idx" unique="false" columns="shop_id"/>
+      <index name="fk_z_vendors_shops_2_idx" unique="false" columns="vendor_id"/>
+    </table>
+    <table name="z_zangu_followers" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="follower_zangu_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_zangu_followers_1" columns="zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_z_zangu_followers_2" columns="follower_zangu_id" ref-table="z_zangus" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_z_zangu_followers_1_idx" unique="false" columns="zangu_id"/>
+      <index name="fk_z_zangu_followers_2_idx" unique="false" columns="follower_zangu_id"/>
+    </table>
+    <table name="z_zangus" schema="" catalog="zangura_main_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="user_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="follower_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="following_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="recommended_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="saved_shops_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="reviews_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="rating" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_updated_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_z_zangus_1" columns="user_id" ref-table="z_users" ref-schema="" ref-catalog="zangura_main_db" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_z_saved_items_1" table="z_saved_items" schema="" catalog="zangura_main_db" columns="zangu_id"/>
+      <exported-key name="fk_z_saved_shops_1" table="z_saved_shops" schema="" catalog="zangura_main_db" columns="zangu_id"/>
+      <exported-key name="fk_z_shop_followers_2" table="z_shop_followers" schema="" catalog="zangura_main_db" columns="zangu_id"/>
+      <exported-key name="fk_z_shop_reviews_10" table="z_shop_reviews" schema="" catalog="zangura_main_db" columns="zangu_id"/>
+      <exported-key name="fk_z_shop_reviews_likes_2" table="z_shop_reviews_likes" schema="" catalog="zangura_main_db" columns="zangu_id"/>
+      <exported-key name="fk_z_shop_users_viewed_2" table="z_shop_users_viewed" schema="" catalog="zangura_main_db" columns="zangu_id"/>
+      <exported-key name="fk_z_shops_recommends_2" table="z_shops_recommends" schema="" catalog="zangura_main_db" columns="recommender_zangu_id"/>
+      <exported-key name="fk_z_shops_recommends_3" table="z_shops_recommends" schema="" catalog="zangura_main_db" columns="recommend_to_zangu_id"/>
+      <exported-key name="fk_z_zangu_followers_1" table="z_zangu_followers" schema="" catalog="zangura_main_db" columns="zangu_id"/>
+      <exported-key name="fk_z_zangu_followers_2" table="z_zangu_followers" schema="" catalog="zangura_main_db" columns="follower_zangu_id"/>
+      <index name="fk_z_zangus_1_idx" unique="false" columns="user_id"/>
+    </table>
+  </data-source>
+</component>

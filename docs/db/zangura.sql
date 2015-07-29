@@ -92,7 +92,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `zangura_main_db`.`z_location`
+-- Table `zangura_main_db`.`z_locations`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `zangura_main_db`.`z_locations` ;
 
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `zangura_main_db`.`z_user_details` (
     ON UPDATE CASCADE,
   CONSTRAINT `fk_z_user_details_3`
     FOREIGN KEY (`location_id`)
-    REFERENCES `zangura_main_db`.`z_location` (`id`)
+    REFERENCES `zangura_main_db`.`z_locations` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `zangura_main_db`.`z_shops` (
   INDEX `fk_z_shops_1_idx` (`shop_creator_id` ASC),
   CONSTRAINT `fk_z_shops_2`
     FOREIGN KEY (`location_id`)
-    REFERENCES `zangura_main_db`.`z_location` (`id`)
+    REFERENCES `zangura_main_db`.`z_locations` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_z_shops_1`
