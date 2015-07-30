@@ -40,3 +40,8 @@ DROP  `longitude` ;
 
 ALTER TABLE  `z_shops` CHANGE  `landmark`  `landmark` VARCHAR( 255 ) NULL DEFAULT NULL ;
 
+ALTER TABLE  `z_shops` DROP FOREIGN KEY  `fk_z_shops_2` ;
+
+ALTER TABLE  `z_shops` ADD CONSTRAINT  `fk_z_shops_2` FOREIGN KEY (  `location_id` ) REFERENCES `zangura_main_db`.`z_locations` (
+`id`
+) ON DELETE RESTRICT ON UPDATE NO ACTION ;
