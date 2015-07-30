@@ -38,3 +38,5 @@ ALTER TABLE  `z_shops` ADD FOREIGN KEY (  `map_id` ) REFERENCES  `zangura_main_d
 ALTER TABLE  `z_locations` DROP  `latitude` ,
 DROP  `longitude` ;
 
+ALTER TABLE  `z_shops` CHANGE  `landmark`  `landmark` VARCHAR( 255 ) NULL DEFAULT NULL ;
+
