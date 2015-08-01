@@ -45,3 +45,6 @@ ALTER TABLE  `z_shops` DROP FOREIGN KEY  `fk_z_shops_2` ;
 ALTER TABLE  `z_shops` ADD CONSTRAINT  `fk_z_shops_2` FOREIGN KEY (  `location_id` ) REFERENCES `zangura_main_db`.`z_locations` (
 `id`
 ) ON DELETE RESTRICT ON UPDATE NO ACTION ;
+
+ALTER TABLE  `z_shop_photos` CHANGE  `title`  `type` ENUM(  'banner',  'shop_pics',  '',  '' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+ALTER TABLE `z_shops` DROP `banner`;
