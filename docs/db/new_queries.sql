@@ -38,6 +38,8 @@ ALTER TABLE  `z_shops` ADD FOREIGN KEY (  `map_id` ) REFERENCES  `zangura_main_d
 ALTER TABLE  `z_locations` DROP  `latitude` ,
 DROP  `longitude` ;
 
+INSERT INTO `zangura_main_db`.`z_shops_map` (`id`, `latitude`, `longitude`, `created_at`, `last_updated_at`) VALUES ('1', '', '', '2015-07-30 00:00:00', '2015-07-30 00:00:00');
+
 ALTER TABLE  `z_shops` CHANGE  `landmark`  `landmark` VARCHAR( 255 ) NULL DEFAULT NULL ;
 
 ALTER TABLE  `z_shops` DROP FOREIGN KEY  `fk_z_shops_2` ;
